@@ -1,37 +1,37 @@
 #include "main.h"
 
 void createListClient(Client *&first) {
-    first = NULL;
+    first = nullptr;
 }
 
 void createNewClient(string nama, Client *&newClient) {
     newClient = new Client;
     newClient->nama = nama;
-    newClient->next = NULL;
-    newClient->prev = NULL;
+    newClient->next = nullptr;
+    newClient->prev = nullptr;
 }
 
 void insertFirstClient(Client *&first, Client *newClient) {
-    if (first == NULL) {
-        newClient->next = NULL;
-        newClient->prev = NULL;
+    if (first == nullptr) {
+        newClient->next = nullptr;
+        newClient->prev = nullptr;
         first = newClient;
     } 
     else {
         newClient->next = first;
         first->prev = newClient;
-        newClient->prev = NULL;
+        newClient->prev = nullptr;
         first = newClient;
     }
 }
 
 void insertAfterClient(Client *prec, Client *newClient) {
-    if (prec == NULL) {
+    if (prec == nullptr) {
         cout << "Predecessor (node acuan) tidak boleh NULL." << endl;
         return;
     }
     
-    if (prec->next != NULL) {
+    if (prec->next != nullptr) {
         newClient->next = prec->next; 
         prec->next->prev = newClient; 
     } 
@@ -40,12 +40,12 @@ void insertAfterClient(Client *prec, Client *newClient) {
 }
 
 void insertLastClient(Client *&first, Client *newClient) {
-    if (first == NULL) {
+    if (first == nullptr) {
         insertFirstClient(first, newClient);
         return;
     }
     Client *last = first;
-    while (last->next != NULL) {
+    while (last->next != nullptr) {
         last = last->next;
     }
     last->next = newClient;
@@ -53,17 +53,17 @@ void insertLastClient(Client *&first, Client *newClient) {
 }
 
 void deleteFirstClient(Client *&first) {
-    if (first == NULL) {
+    if (first == nullptr) {
         cout << "List kosong, tidak ada Client yang bisa dihapus." << endl;
         return;
     }
     Client *deletedNode = first;
-    if (first->next == NULL) {
-        first = NULL;
+    if (first->next == nullptr) {
+        first = nullptr;
     } 
     else {
         first = first->next; 
-        first->prev = NULL; 
+        first->prev = nullptr; 
     }
     
     delete deletedNode;
@@ -71,45 +71,45 @@ void deleteFirstClient(Client *&first) {
 }
 
 void deleteAfterClient(Client *prec) {
-    if (prec == NULL || prec->next == NULL) {
+    if (prec == nullptr || prec->next == nullptr) {
         cout << "Tidak ada node setelah predecessor untuk dihapus." << endl;
         return;
     }
     Client *deletedNode = prec->next;
-    if (deletedNode->next == NULL) {
-        prec->next = NULL;
+    if (deletedNode->next == nullptr) {
+        prec->next = nullptr;
     } 
     else {
         deletedNode->next->prev = prec;
         prec->next = deletedNode->next;
     }
-    deletedNode->prev = NULL;
-    deletedNode->next = NULL;
+    deletedNode->prev = nullptr;
+    deletedNode->next = nullptr;
     delete deletedNode;
     cout << "Node Client setelah predecessor berhasil dihapus." << endl;
 }
 
 void deleteLastClient(Client *&first) {
-    if (first == NULL) {
+    if (first == nullptr) {
         cout << "List kosong, tidak ada yang dihapus." << endl;
         return;
     }
-    if (first->next == NULL) {
+    if (first->next == nullptr) {
         deleteFirstClient(first);
         return;
     }
     Client *last = first;
-    while (last->next != NULL) {
+    while (last->next != nullptr) {
         last = last->next;
     }
     Client *beforeLast = last->prev;
-    beforeLast->next = NULL;
+    beforeLast->next = nullptr;
     delete last;
     cout << "Client terakhir berhasil dihapus." << endl;
 }
 
 void printListClient(Client *first) {
-    if (first == NULL) {
+    if (first == nullptr) {
         cout << "List Client kosong." << endl;
         return;
     }
@@ -117,11 +117,12 @@ void printListClient(Client *first) {
     Client *current = first;
     cout << "--- LIST CLIENT (Doubly Linked List) ---" << endl;
     int count = 1;
-    while (current != NULL) {
+    while (current != nullptr) {
         cout << count << ". Nama: " << current->nama << endl;
         current = current->next;
         count++;
     }
     cout << "------------------------------------------" << endl;
 }
+
 
