@@ -1,128 +1,69 @@
-#include "main.h"
+#include "client.h"
+#include "developer.h"
+#include "relation.h"
+#include <iostream>
+using namespace std;
 
-void createListClient(Client *&first) {
-    first = nullptr;
+void createClientList(ClientList &L) {
+    L.first = nullptr;
 }
 
-void createNewClient(string nama, Client *&newClient) {
-    newClient = new Client;
-    newClient->nama = nama;
-    newClient->next = nullptr;
-    newClient->prev = nullptr;
+adrCli createClientNode(Client &x) {
+    adrCli P = new ClientElm;
+    P->info = x;
+    P->next = nullptr;
+    return P;
 }
 
-void insertFirstClient(Client *&first, Client *newClient) {
-    if (first == nullptr) {
-        newClient->next = nullptr;
-        newClient->prev = nullptr;
-        first = newClient;
-    } 
-    else {
-        newClient->next = first;
-        first->prev = newClient;
-        newClient->prev = nullptr;
-        first = newClient;
+bool isEmptyCli(ClientList L){
+    return (L.first == nullptr);
+}
+
+void insertClient(ClientList &L, adrCli P){
+    if (L.first == nullptr) {
+        L.first = P;
+    } else {
+        P->next = L.first;
+        L.first = P;
     }
 }
 
-void insertAfterClient(Client *prec, Client *newClient) {
-    if (prec == nullptr) {
-        cout << "Predecessor (node acuan) tidak boleh NULL." << endl;
+adrCli findClient(ClientList &L, string &id) {
+    adrCli p = L.first;
+    while (p != nullptr) {
+        if (p->info.id == id){
+            return p;
+        }
+        p = p->next;
+    }
+    return nullptr;
+}
+
+void deleteClientByElm(ClientList &L, adrCli P) {
+    if (!P) return;
+    if (L.first == P) {
+        L.first = P->next;
+        delete P;
         return;
     }
-    
-    if (prec->next != nullptr) {
-        newClient->next = prec->next; 
-        prec->next->prev = newClient; 
-    } 
-    prec->next = newClient;
-    newClient->prev = prec;
+    adrCli prev = L.first;
+    while (prev != nullptr && prev->next != P) prev = prev->next;
+    if (prev != nullptr) {
+        prev->next = P->next;
+        delete P;
+    }
 }
 
-void insertLastClient(Client *&first, Client *newClient) {
-    if (first == nullptr) {
-        insertFirstClient(first, newClient);
-        return;
-    }
-    Client *last = first;
-    while (last->next != nullptr) {
-        last = last->next;
-    }
-    last->next = newClient;
-    newClient->prev = last;
+void deleteClientById(ClientList &L, string &id) {
+    adrCli p = findClient(L, id);
+    deleteClientByElm(L, p);
 }
 
-void deleteFirstClient(Client *&first) {
-    if (first == nullptr) {
-        cout << "List kosong, tidak ada Client yang bisa dihapus." << endl;
-        return;
+void showAllClient(ClientList &L) {
+    adrCli p = L.first;
+    cout << "=== Client List ===\n";
+    while (p != nullptr) {
+        cout << "ID: " << p->info.id << " | Name: " << p->info.name << '\n';
+        p = p->next;
     }
-    Client *deletedNode = first;
-    if (first->next == nullptr) {
-        first = nullptr;
-    } 
-    else {
-        first = first->next; 
-        first->prev = nullptr; 
-    }
-    
-    delete deletedNode;
-    cout << "Client pertama berhasil dihapus." << endl;
 }
-
-void deleteAfterClient(Client *prec) {
-    if (prec == nullptr || prec->next == nullptr) {
-        cout << "Tidak ada node setelah predecessor untuk dihapus." << endl;
-        return;
-    }
-    Client *deletedNode = prec->next;
-    if (deletedNode->next == nullptr) {
-        prec->next = nullptr;
-    } 
-    else {
-        deletedNode->next->prev = prec;
-        prec->next = deletedNode->next;
-    }
-    deletedNode->prev = nullptr;
-    deletedNode->next = nullptr;
-    delete deletedNode;
-    cout << "Node Client setelah predecessor berhasil dihapus." << endl;
-}
-
-void deleteLastClient(Client *&first) {
-    if (first == nullptr) {
-        cout << "List kosong, tidak ada yang dihapus." << endl;
-        return;
-    }
-    if (first->next == nullptr) {
-        deleteFirstClient(first);
-        return;
-    }
-    Client *last = first;
-    while (last->next != nullptr) {
-        last = last->next;
-    }
-    Client *beforeLast = last->prev;
-    beforeLast->next = nullptr;
-    delete last;
-    cout << "Client terakhir berhasil dihapus." << endl;
-}
-
-void printListClient(Client *first) {
-    if (first == nullptr) {
-        cout << "List Client kosong." << endl;
-        return;
-    }
-
-    Client *current = first;
-    cout << "--- LIST CLIENT (Doubly Linked List) ---" << endl;
-    int count = 1;
-    while (current != nullptr) {
-        cout << count << ". Nama: " << current->nama << endl;
-        current = current->next;
-        count++;
-    }
-    cout << "------------------------------------------" << endl;
-}
-
-
