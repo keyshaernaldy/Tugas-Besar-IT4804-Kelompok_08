@@ -1,0 +1,36 @@
+# depslib dependency file v1.0
+1765861671 source:c:\users\asus vivobook\downloads\tugas-besar-it4803-kelompok_08\client_ky.cpp
+
+1765859491 source:c:\users\asus vivobook\downloads\tugas-besar-it4803-kelompok_08\developer_fs.cpp
+
+1765996593 source:c:\users\asus vivobook\downloads\tugas-besar-it4803-kelompok_08\client_fs.cpp
+	"client.h"
+	<iostream>
+
+1765985958 c:\users\asus vivobook\downloads\tugas-besar-it4803-kelompok_08\client.h
+	<iostream>
+	<string>
+
+1766001936 c:\users\asus vivobook\downloads\tugas-besar-it4803-kelompok_08\developer.h
+	<iostream>
+	<string>
+
+1766001737 c:\users\asus vivobook\downloads\tugas-besar-it4803-kelompok_08\relation.h
+	<string>
+	"developer.h"
+	"client.h"
+
+1766002879 source:c:\users\asus vivobook\downloads\tugas-besar-it4803-kelompok_08\developer_ky.cpp
+	"developer.h"
+	<iostream>
+
+1766001737 source:c:\users\asus vivobook\downloads\tugas-besar-it4803-kelompok_08\main.cpp
+	<iostream>
+	"developer.h"
+	"client.h"
+	"relation.h"
+
+1765984002 source:c:\users\asus vivobook\downloads\tugas-besar-it4803-kelompok_08\relation.cpp
+	"relation.h"
+	<iostream>
+
